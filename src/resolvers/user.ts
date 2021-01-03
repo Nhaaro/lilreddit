@@ -42,7 +42,7 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async register(
     @Arg("credentials") options: AuthFields,
-    @Ctx() { em }: MyContext
+    @Ctx() { em, req }: MyContext
   ): Promise<UserResponse> {
     if (options.username.length <= 2) {
       return {
@@ -80,13 +80,14 @@ export class UserResolver {
       }
     }
 
+    req.session.userId = user.id;
     return { user };
   }
 
   @Mutation(() => UserResponse)
   async login(
     @Arg("credentials") options: AuthFields,
-    @Ctx() { em }: MyContext
+    @Ctx() { em, req }: MyContext
   ): Promise<UserResponse> {
     const user = await em.findOne(User, { username: options.username });
     if (!user) {
@@ -106,6 +107,7 @@ export class UserResolver {
       };
     }
 
+    req.session.userId = user.id;
     return { user };
   }
 }
