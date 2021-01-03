@@ -5,8 +5,8 @@ import express from "express";
 import { buildSchema } from "type-graphql";
 import { __prod__ } from "./constants";
 import microConfig from "./mikro-orm.config";
-import { HelloResolver } from "./resolvers/hello.js";
-import { PostResolver } from "./resolvers/post.js";
+import { HelloResolver } from "./resolvers/hello";
+import { PostResolver } from "./resolvers/post";
 
 const main = async () => {
   const orm = await MikroORM.init(microConfig);
